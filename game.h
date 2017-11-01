@@ -1,11 +1,16 @@
 #ifndef BOARD_H
 #define BOARD_H
-#include "Board.h"
+#include "board.h"
 #endif
 
 #ifndef PIECETYPE
 #define PIECETYPE
 #include "piecetype.cpp"
+#endif
+
+#ifndef CONSOLE_H
+#define CONSOLE_H
+#include "console.h"
 #endif
 
 class Game
@@ -15,15 +20,13 @@ public:
     Game();
     ~Game();
 
-    void Start();
+    void Play();
 
 private:
     Board *board;
+    Console *console;
     PieceType pieceToMove;
 
-    void PrintGameStart();
     void PromptNextPieceMove(PieceType piece);
-    void PrintWinnerMessage(PieceType piece);
-    void PrintDrawnGameMessage();
     void EndTurn();
 };

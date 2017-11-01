@@ -10,11 +10,9 @@ public:
     Board ();
     ~Board();
 
-    void Print();
-    void PrintPromptBoard();
     bool IsWinner(PieceType piece);
-    char PieceTypeToChar(PieceType piece);
     void PlacePiece(PieceType piece, int square);
+    PieceType PieceAtLocation(int row, int column);
     bool IsDrawnGame();
 
 private:

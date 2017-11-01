@@ -21,45 +21,9 @@ Board::Board()
     }
 }
 
-void Board::PrintPromptBoard()
-{
-    std::cout << " -------------" << std::endl;
-
-    for(int i = 0; i < 3; i++)
-    {
-        std::cout << " | ";
-        for(int j = 1; j <= 3; j++)
-        {
-            std::cout << ((i * 3) + j) << " | ";
-        }
-        std::cout << std::endl;
-    }
-
-    std::cout << " -------------" << std::endl;
-}
-
 Board::~Board()
 {
 
-}
-
-void Board::Print()
-{
-    std::cout << " -------------" << std::endl;
-
-    for(int i = 0; i < 3; i++)
-    {
-        std::cout << " | ";
-        for(int j = 0; j < 3; j++)
-        {
-            char val = PieceTypeToChar(squares[i][j]);
-
-            std::cout << val << " | ";
-        }
-        std::cout << std::endl;
-    }
-
-    std::cout << " -------------" << std::endl;
 }
 
 bool Board::IsWinner(PieceType piece)
@@ -79,22 +43,6 @@ bool Board::IsWinner(PieceType piece)
     }
 
     return isWinner;
-}
-
-char Board::PieceTypeToChar(PieceType piece)
-{
-    if(piece == PieceType::X)
-    {
-        return 'X';
-    }
-    else if(piece == PieceType::O)
-    {
-        return 'O';
-    }
-    else
-    {
-        return '-';
-    }
 }
 
 void Board::PlacePiece(PieceType piece, int square)
@@ -139,4 +87,9 @@ bool Board::SquareIsPiece(int square, PieceType piece)
     int column = SquareToColumn(square);
 
     return squares[row][column] == piece;
+}
+
+PieceType Board::PieceAtLocation(int row, int column)
+{
+    return squares[row][column];
 }

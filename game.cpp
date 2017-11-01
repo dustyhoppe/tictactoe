@@ -9,17 +9,19 @@
 Game::Game()
 {
     board = new Board();
+    console = new Console();
     pieceToMove = PieceType::X;
 };
 
 Game::~Game()
 {
     delete board;
+    delete console;
 }
 
-void Game::Start()
+void Game::Play()
 {
-    PrintGameStart();
+    console->PrintGameStart();
 
     bool gameContinue = true;
     while(gameContinue)
@@ -28,12 +30,12 @@ void Game::Start()
 
         if(board->IsWinner(pieceToMove))
         {
-            PrintWinnerMessage(pieceToMove);
+            console->PrintWinnerMessage(pieceToMove);
             gameContinue = false;
         } 
         else if(board->IsDrawnGame()) 
         {
-            PrintDrawnGameMessage();
+            console->PrintDrawnGameMessage();
             gameContinue = false;
         } 
         else 
@@ -43,29 +45,15 @@ void Game::Start()
     }
 }
 
-void Game::PrintGameStart()
-{
-    std::cout << "---------------------------" << std::endl;
-    std::cout << "Welcome to Tic Tac Toe" << std::endl << std::endl;
-}
-
 void Game::PromptNextPieceMove(PieceType piece)
 {
-    char charToMove = board->PieceTypeToChar(piece);
+    console->PromptPlayerToMove(piece);
 
-    std::cout << "Player " << charToMove << " it is your move" << std::endl;
-    std::cout << "Enter your square number now ..." << std::endl;
+    console->PrintPromptBoard();
 
-    board->PrintPromptBoard();
+    board->PlacePiece(piece, console->PromptSquareToPlay(piece));
 
-    int squareToPlay = 0;
-    std::cin >> squareToPlay;
-
-    std::cout << std::endl <<  charToMove << "'s select " << squareToPlay << std::endl;
-    board->PlacePiece(piece, squareToPlay);
-
-    board->Print();
-    std::cout << std::endl;
+    console->PrintBoard(board);
 }
 
 void Game::EndTurn()
@@ -79,16 +67,4 @@ void Game::EndTurn()
     else{
         throw new std::exception();
     }
-}
-
-void Game::PrintWinnerMessage(PieceType piece)
-{
-    char winner = board->PieceTypeToChar(piece);
-
-    std::cout << "CONGRATS! " << winner << "'s have achieved 3 in-a-row!" << std::endl << std::endl;
-}
-
-void Game::PrintDrawnGameMessage()
-{
-    std::cout << std::endl << "Sorry, the game has been drawn. Please try again!" << std::endl << std::endl;
 }
